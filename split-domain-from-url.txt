@@ -1,0 +1,28 @@
+'for splitting domains out from a disavow list
+Sub splitURLS()
+    Dim counter As Long
+    Dim cellValue As String
+    counter = 3
+    With ActiveSheet
+        Do While .Cells(counter, 1) <> 0
+            cellValue = .Cells(counter, 1).Value
+            If Left(cellValue, 7) = "http://" Then
+                If InStr(9, cellValue, "/") = 0 Then
+                    .Cells(counter, 2).Value = Mid(cellValue, 8)
+                Else
+                    .Cells(counter, 2).Value = Mid(cellValue, 8, InStr(8, cellValue, "/") - 8)
+                End If
+            ElseIf Left(cellValue, 7) = "domain:" Then
+                .Cells(counter, 2).Value = Mid(cellValue, 8)
+            ElseIf Left(cellValue, 8) = "https://" Then
+                If InStr(9, cellValue, "/") = 0 Then
+                    .Cells(counter, 2).Value = Mid(cellValue, 9)
+                Else
+                    .Cells(counter, 2).Value = Mid(cellValue, 9, InStr(9, cellValue, "/") - 9)
+                End If
+            Else
+            End If
+        counter = counter + 1
+        Loop
+    End With
+End Sub

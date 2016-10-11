@@ -1,0 +1,30 @@
+Dim counter As Long
+Dim counter2 As Long
+
+
+Dim downloadValue As String
+
+Sub tallyUp()
+    counter = 2
+    counter2 = 1
+
+    ActiveWorkbook.Worksheets("download").Activate
+    With ActiveSheet
+        Do While .Cells(counter, 1).Value <> 0
+            downloadValue = .Cells(counter, 1).Value
+            ActiveWorkbook.Worksheets("uniques").Activate
+            With ActiveSheet
+                Do While .Cells(counter2, 1).Value <> 0
+                    If downloadValue = .Cells(counter2, 1).Value Then
+                        .Cells(counter2, 2).Value = .Cells(counter2, 2).Value + 1
+                        counter2 = 1
+                        Exit Do
+                    Else
+                        counter2 = counter2 + 1
+                    End If
+                Loop
+            End With
+            counter = counter + 1
+        Loop
+    End With
+End Sub
